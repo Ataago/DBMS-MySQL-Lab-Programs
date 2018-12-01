@@ -1,0 +1,117 @@
+a) Create the tables for the schemas provided with primary keys and foreign keys
+
+create table student(
+  2  s_id number(5),
+  3  s_name varchar(20),
+  4  major varchar(20),
+  5  lvl varchar(4),
+  6  age number(4),
+  7  primary key(s_id));
+
+create table faculty(
+  2  f_id number(5),
+  3  f_name varchar(20),
+  4  d_id number(5),
+  5  primary key(f_id));
+
+ create table class(
+  2  name varchar(10),
+  3  meets_at varchar(5),
+  4  room varchar(5),
+  5  f_id number(5),
+  6  primary key(name),
+  7  foreign key(f_id) references faculty(f_id));
+
+
+create table enrolled(
+  2  s_id number(5),
+  3  c_name varchar(10),
+  4  foreign key(s_id) references student(s_id),
+  5  foreign key(c_name) references class(name));
+
+
+
+
+b) Insert 5 tuples of values to each table. 
+
+insert into student values('&s_id','&s_name','&major','&lvl','&age');
+
+insert into faculty values('&f_id','&f_name','&d_id')
+
+insert into class values('&name','&meets_at','&room','&f_id');
+
+insert into enrolled values('&s_id','&c_name');
+
+
+SQL> select * from student;
+
+      S_ID S_NAME               MAJOR                LVL         AGE
+---------- -------------------- -------------------- ---- ----------
+      1001 Ataa                 cse                  sr           19
+      1002 Nawaal               cse                  jr           18
+      1003 Nabil                cse                  sr           21
+      1004 Amit                 cse                  sr           22
+
+SQL> select * from faculty;
+
+      F_ID F_NAME                     D_ID
+---------- -------------------- ----------
+      2001 Almas                         1
+      2002 Ravi                          1
+
+SQL> select * from class;
+
+NAME       MEETS ROOM        F_ID
+---------- ----- ----- ----------
+DBMS       9     101         2001
+SE         9     102         2002
+FLAT       10    101         2002
+AI         11    101         2001
+
+SQL> select * from enrolled;
+
+      S_ID C_NAME
+---------- ----------
+      1001 DBMS
+      1002 DBMS
+      1003 DBMS
+      1004 DBMS
+      1001 SE
+      1002 FLAT
+      1003 AI
+
+
+
+
+
+c) Find the names of all Juniors (level = JR) who are enrolled in a class taught by Prof. Harshith 
+
+SQL> select student.s_name
+  2  from student, enrolled, class, faculty
+  3  where
+  4  lvl = 'sr' and faculty.f_name = 'Almas' and
+  5  student.s_id = enrolled.s_id and
+  6  enrolled.c_name = class.name and
+  7  class.f_id = faculty.f_id;
+
+d) Find the names of all classes that either meet in room R128 or have five or more Students enrolled.
+
+SQL>  select distinct name
+  2  from class
+  3  where
+  4  	room = 102 or
+  5 	name in (
+  6     	select c_name
+  7     	from enrolled
+  8     	group by c_name having count(*) > 3)
+
+ 
+e) Find the names of faculty members for whom the combined enrollment of the courses that they teach is less than five. 
+  
+SQL> select distinct f_name
+  2  from faculty
+  3  where
+  4     f_id in (
+  5             select f_id
+  6             from class
+  7*            group by f_id having count(f_id) < 2)
