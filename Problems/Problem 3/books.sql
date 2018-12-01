@@ -129,24 +129,3 @@ select * from catalog;
 select * from orders;
 
 commit;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

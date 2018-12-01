@@ -153,19 +153,3 @@ select * from borrower;
 commit;
 savepoint ataago;
 rollback;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

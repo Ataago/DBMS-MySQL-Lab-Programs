@@ -134,21 +134,3 @@ select * from warehouse;
 select * from shipment;
 
 commit;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
