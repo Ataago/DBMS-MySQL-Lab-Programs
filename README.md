@@ -1,5 +1,5 @@
 # DBMS-MySQL-Lab-Programs
-Data Base Management System general Problems and its queries.
+Data Base Management System general Problems and its queries. DSCE 2018-2019
 
 ## Problem 1
 
